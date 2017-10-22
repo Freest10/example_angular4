@@ -1,0 +1,114 @@
+<h1>Добавление пользователя</h1>
+<a [routerLink]="['/task1/users']"  >
+  Все Пользователи
+</a>
+<form (ngSubmit)="onSubmit()" #f="ngForm">
+<div>
+  <mat-form-field >
+    <input matInput
+           [(ngModel)]="model.name"
+           name="name"
+           #name="ngModel"
+           placeholder="Фамилия"
+    >
+  </mat-form-field>
+</div>
+<div>
+  <mat-form-field >
+    <input matInput
+           [(ngModel)]="model.secondName"
+           name="secondName"
+           #name="ngModel"
+           placeholder="Имя"
+    >
+  </mat-form-field>
+</div>
+<div>
+  <mat-form-field >
+    <input matInput
+           [(ngModel)]="model.thirdName"
+           name="thirdName"
+           #name="ngModel"
+           placeholder="Отчество"
+    >
+  </mat-form-field>
+</div>
+<div>
+  <h4>Пол:</h4>
+  <mat-radio-group>
+    <input type="radio" value="male" name="gender" [(ngModel)]="model.gender" required> Mужской
+    <input type="radio" value="female" name="gender" [(ngModel)]="model.gender" required> Женский
+    <!--<mat-radio-button value="male" name="gender" [(ngModel)]="model" >Mужской</mat-radio-button>-->
+    <!--<mat-radio-button value="female" name="gender" [(ngModel)]="model" >Женский</mat-radio-button>-->
+  </mat-radio-group>
+</div>
+  <div>
+      <button type="button" md-button (click)="imgFileInput.click()">Фото</button>
+      <input hidden type="file" #imgFileInput [(ngModel)]="model.photo"
+             name="photo"
+             #name="ngModel"
+             type="file"
+             (change)="previewImage($event)"
+      />
+  </div>
+<div>
+  <mat-form-field>
+    <mat-select
+                placeholder="Должность"
+                required
+                [(ngModel)]="model.position"
+                name="position"
+                #name="ngModel"
+    >
+      <mat-option *ngFor="let position of positions" [value]="position.value">
+        {{position.text}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div>
+  <mat-form-field>
+    <mat-select
+                placeholder="Подразделение"
+                required
+                [(ngModel)]="model.division"
+                name="division"
+                #name="ngModel"
+    >
+      <mat-option *ngFor="let division of divisions" [value]="division.value">
+        {{division.text}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div>
+  <h4>Доступы:</h4>
+  <mat-checkbox
+    [(ngModel)]="model.isCreateDEposite"
+    name="isCreateDEposite"
+    #name="ngModel"
+  >Создание депозита</mat-checkbox>
+  <br/>
+  <mat-checkbox
+      [(ngModel)]="model.isCloseDEposite"
+      name="isCloseDEposite"
+      #name="ngModel"
+  >Закрытие депозита</mat-checkbox>
+  <br/>
+  <mat-checkbox
+    [(ngModel)]="model.isApprovalCredit"
+    name="isApprovalCredit"
+    #name="ngModel"
+  >Одобрение кредита</mat-checkbox>
+  <br/>
+  <mat-checkbox
+    [(ngModel)]="model.isApprovalOpenScore"
+    name="isApprovalOpenScore"
+    #name="ngModel"
+  >Одобрение открытие счета</mat-checkbox>
+</div>
+<div class="button-row">
+  <button mat-raised-button color="primary" type="submit">Сохранить</button>
+  <button mat-raised-button>Отменить</button>
+</div>
+</form>
