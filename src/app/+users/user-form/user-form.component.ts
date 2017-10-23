@@ -1,9 +1,14 @@
 import {
   Component,
   OnInit,
+  Inject
 } from '@angular/core';
 import { User } from './user';
-
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {DivisionsService} from '../divisions/divisions.service';
+import {PositionsService} from '../positions/positions.service';
+import {UserService} from './user.service';
+import {Simple} from '../simple';
 
 @Component({
   selector: 'user-form',
@@ -13,43 +18,71 @@ import { User } from './user';
 export class UserFormComponent implements OnInit {
   submitted: boolean;
   selectedValue: string;
-
-  model = new User(
-    "Вася",
-    "Иванов",
-    "Иванович",
-    "male",
-     null,
+  model: User = new User(
+    10,
+    "",
+    "",
+    "",
+    "",
+    null,
     1,
-    2,
-    true,
+    1,
     false,
     false,
-    true
+    false,
+    false
   );
+  private positions: Array<Simple>;
+  private divisions: Array<Simple>;
 
-  positions = [
-    {value: 1, text: 'Секретарь'},
-    {value: 2, text: 'Начальник'},
-    {value: 3, text: 'Администратор'},
-    {value: 4, text: 'Директор'}
-  ];
-
-  divisions = [
-    {value: 1, text: 'Департамент управления персоналом'},
-    {value: 2, text: 'Департамент управления рисками'}
-  ];
+  constructor(
+    public dialogRef: MatDialogRef<UserFormComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private userService: UserService,
+    private divisionsService: DivisionsService,
+    private positionsService: PositionsService
+  ){}
 
   public ngOnInit() {
-    console.log('hello `AddUserComponent` component');
+      this.getDivisions();
+      this.getPositions();
+      //copy real user data
+      if(this.data.user){
+        this.model = Object.assign({},this.data.user);
+      }
 
-
+    console.log(this.data, 'hello `AddUserComponent` component');
   }
 
   previewImage(event) {
     console.log(event, "event");
   }
 
-  onSubmit() { this.submitted = true; console.log(this.model); }
+  getDivisions(): void {
+    this.divisionsService.getDivisions().then(divisions => this.divisions = divisions);
+  }
+
+  getPositions(): void {
+    this.positionsService.getPositions().then(positions => this.positions = positions);
+  }
+
+  addUser(): void {
+      this.userService.addUser(this.model);
+  }
+
+  onSubmit() {
+      //merge prev data and chenged data
+      if(this.data.user){
+          let userData = Object.assign(this.data.user, this.model);
+      }else{
+        //add new User
+        this.addUser();
+      }
+      this.closeModal();
+  }
+
+  closeModal(): void {
+    this.dialogRef.close();
+  }
 
 }

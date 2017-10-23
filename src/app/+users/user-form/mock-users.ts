@@ -1,7 +1,9 @@
 import { User } from './user';
 
 export const USERS: User[] = [
-  { name: "Вася",
+  {
+    id: 1,
+    name: "Вася",
     secondName: "Иванов",
     thirdName: "Иванович",
     gender: "male",

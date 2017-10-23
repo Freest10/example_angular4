@@ -1,65 +1,27 @@
 import {
   Component,
   OnInit,
+  OnChanges
 } from '@angular/core';
 
 import {UserService} from './user-form/user.service';
 import {DivisionsService} from './divisions/divisions.service';
 import {PositionsService} from './positions/positions.service';
 import {UserFormComponent} from './user-form/user-form.component';
+import {User} from './user-form/user';
 import {MatDialog} from '@angular/material';
 import {Simple} from './simple';
 
 @Component({
   selector: 'users',
-  template: `
-    <h1>Task2</h1>
-    <span>
-      <a [routerLink]="['/task1/users']" >
-       Все Пользователи
-      </a>
-      <a>
-       Добавить пользователя
-      </a>
-    </span>
-    <div class="departaments">
-      <table>
-        <ng-container *ngFor="let division of divisions">
-          <tr>
-            <h4>{{division.text}}</h4>
-          </tr>
-          <ng-container *ngIf="usersByDivisions[division.value]">
-            <ng-container *ngFor="let userByDivision of usersByDivisions[division.value]">
-            <tr>
-              <td>
-                {{userByDivision.secondName}}
-              </td>
-              <td>
-                {{getPostion(userByDivision.position)}}
-              </td>
-              <td>
-                {{userByDivision.photo}}
-              </td>
-              <td>
-                <div >посмотреть</div>
-              </td>
-              <td>
-                <div>удалить</div>
-              </td>
-            </tr>
-            </ng-container>
-          </ng-container>
-        </ng-container>
-      </table>
-    </div>
-    <router-outlet></router-outlet>
-  `,
+  templateUrl: './user.component.html'
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent implements OnInit, OnChanges {
 
   private divisions: Array<Simple>;
-  private usersByDivisions: any;
-  private positions: Array<Simple>;
+  public usersByDivisions: any = {};
+  private positions: Object;
+  private subscriptionUsers;
   constructor(
     private userService: UserService,
     private divisionsService: DivisionsService,
@@ -68,11 +30,21 @@ export class UsersComponent implements OnInit {
   ) {}
 
   public ngOnInit() {
-
     this.getDivisions();
-    this.getUsersByDivisions();
-    console.log(this, this.divisions, 'hello `UsersComponent` component');
+    //this.getUsersByDivisions();
+    this.getPostionsObject();
+
+    this.subscriptionUsers = this.userService.getUsersObserve().subscribe(users => {
+       this.usersByDivisions = users;
+      console.log(this.usersByDivisions, 'usersByDivisions');
+    });
+
     this.userService.getUsersByDivisions();
+    console.log(this, "UsersComponent");
+  }
+
+  public ngOnChanges(event) {
+    console.log(event, this, "ngOnChanges")
   }
 
   getDivisions(): void {
@@ -84,20 +56,26 @@ export class UsersComponent implements OnInit {
   }
 
 
-  getUsersByDivisions(): void {
-    this.userService.getUsersByDivisions().then(usersByDivisions => this.usersByDivisions = usersByDivisions);
+  deleteUser(id: number) {
+    this.userService.deleteUser(id);
   }
 
-  getPostion(id: number){
-    return this.positionsService.getPostion(id);
+  getUsersByDivisions(): void {
+   // this.userService.getUsersByDivisions().then(usersByDivisions => this.usersByDivisions = usersByDivisions);
   }
-//(click)="showUserInfo(1)"
-  private showUserInfo(user){
-    //console.log(this.dialog, "this.dialog.");
-    /*let dialogRef = this.dialog.open(UserFormComponent, {
-      height: '400px',
+
+  getPostionsObject(): void{
+    this.positionsService.getPostionsObject().then(positions => this.positions = positions);
+  }
+
+  private showUserInfo(user?: User) {
+    let data= {
+      user: user
+    };
+    let dialogRef = this.dialog.open(UserFormComponent, {
       width: '600px',
-    });*/
+      data: data
+    });
   }
 
 }

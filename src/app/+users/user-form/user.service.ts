@@ -2,6 +2,8 @@ import { User } from './user';
 import { USERS } from './mock-users';
 import { DivisionsService } from '../divisions/divisions.service';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class UserService {
@@ -9,10 +11,16 @@ export class UserService {
   private divisions;
   private users;
   private usersByDivisions;
-  constructor(private divisionsService: DivisionsService){}
+  private subjectUsersByDivision = new Subject<any>();
+
+  constructor(private divisionsService: DivisionsService) {}
 
   getUsers(): Promise<User[]> {
     return Promise.resolve(USERS);
+  }
+
+  getUsersObserve(): Observable<any> {
+    return this.subjectUsersByDivision;
   }
 
   async getUsersByDivisions() {
@@ -21,7 +29,8 @@ export class UserService {
 
     this.getDivisionForUsers();
 
-    return this.usersByDivisions;
+    this.subjectUsersByDivision.next(this.usersByDivisions);
+    //return this.usersByDivisions;
   }
 
   private getDivisionForUsers() {
@@ -39,6 +48,24 @@ export class UserService {
       this.usersByDivisions[user.division].push(user);
     });
   }
+
+  async addUser(user: User){
+    await this.getUsers().then(users => users.push(user));
+    this.getUsersByDivisions();
+  }
+
+  async deleteUser(id: number){
+    await this.getUsers().then(users => {
+      for(let i=0; i < users.length;  i++) {
+        let user = users[i];
+        if(user.id == id){
+          users.splice(i, 1);
+        }
+      }
+    });
+    this.getUsersByDivisions();
+  }
+
   /*
   getHeroesSlowly(): Promise<Hero[]> {
     return new Promise(resolve => {

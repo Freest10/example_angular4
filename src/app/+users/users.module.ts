@@ -28,7 +28,8 @@ import { UserFormComponent } from './user-form/user-form.component';
     MatRadioModule,
     MatDialogModule,
     RouterModule.forChild(routes),
-  ]
+  ],
+  entryComponents: [UserFormComponent]
 })
 export class UsersModule {
   public static routes = routes;
