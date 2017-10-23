@@ -7,7 +7,7 @@ import { routes } from './users.routes';
 import { UsersComponent } from './users.component';
 import {MatButtonModule, MatCheckboxModule, MatInputModule, MatSelectModule, MatRadioModule, MatDialogModule} from '@angular/material';
 import { UserFormComponent } from './user-form/user-form.component';
-
+import { FilterComponent } from './filter/filter.component';
 
 
 @NgModule({
@@ -16,7 +16,8 @@ import { UserFormComponent } from './user-form/user-form.component';
      * Components / Directives/ Pipes
      */
     UsersComponent,
-    UserFormComponent
+    UserFormComponent,
+    FilterComponent
   ],
   imports: [
     CommonModule,

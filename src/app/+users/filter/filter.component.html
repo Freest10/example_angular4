@@ -1,0 +1,40 @@
+<form (ngSubmit)="onSubmit()" #filter="ngForm">
+    <div>
+      <mat-form-field >
+        <input matInput
+               [(ngModel)]="model.name"
+               name="name"
+               #name="ngModel"
+               placeholder="Фамилия"
+        >
+      </mat-form-field>
+    </div>
+    <div>3434
+      <mat-select
+        placeholder="Должность"
+        required
+        [(ngModel)]="model.position"
+        name="position"
+        #name="ngModel"
+      >
+        <mat-option *ngFor="let position of positions" [value]="position.value">
+          {{position.text}}
+        </mat-option>
+      </mat-select>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-select
+          placeholder="Подразделение"
+          required
+          [(ngModel)]="model.division"
+          name="division"
+          #name="ngModel"
+        >
+          <mat-option *ngFor="let division of divisions" [value]="division.value">
+            {{division.text}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+ </form>

@@ -7,6 +7,9 @@
        Добавить пользователя
       </div>
     </span>
+<div class="filter">
+  <filter></filter>
+</div>
 <div class="departaments">
   <table>
     <ng-container *ngFor="let division of divisions">
@@ -14,26 +17,26 @@
         <h4>{{division.text}}</h4>
       </tr>
       <ng-container *ngIf="usersByDivisions">
-      <ng-container *ngIf="usersByDivisions[division.value]">
-        <ng-container *ngFor="let userByDivision of usersByDivisions[division.value]">
-          <tr>
-            <td>
-              {{userByDivision.secondName}}
-            </td>
-            <td>
-              {{positions[userByDivision.position]}}
-            </td>
-            <td>
-              {{userByDivision.photo}}
-            </td>
-            <td>
-              <div (click)="showUserInfo(userByDivision)">посмотреть</div>
-            </td>
-            <td>
-              <div (click)="deleteUser(userByDivision.id)">удалить</div>
-            </td>
-           </tr>
-         </ng-container>
+        <ng-container *ngIf="usersByDivisions[division.value]">
+            <ng-container *ngFor="let userByDivision of usersByDivisions[division.value]">
+              <tr>
+                <td>
+                  {{userByDivision.secondName}}
+                </td>
+                <td>
+                  {{positions[userByDivision.position]}}
+                </td>
+                <td>
+                  {{userByDivision.photo}}
+                </td>
+                <td>
+                  <div (click)="showUserInfo(userByDivision)">посмотреть</div>
+                </td>
+                <td>
+                  <div (click)="deleteUser(userByDivision.id)">удалить</div>
+                </td>
+               </tr>
+            </ng-container>
         </ng-container>
       </ng-container>
     </ng-container>
