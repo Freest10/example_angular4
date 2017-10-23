@@ -12,7 +12,8 @@ import {Filter} from './filter';
 
 @Component({
   selector: 'filter',
-  templateUrl: './filter.component.html'
+  templateUrl: './filter.component.html',
+  styles: ['form::after{clear:both}, ul li{float:left}']
 })
 export class FilterComponent implements OnInit {
   private model: Filter = new Filter(
@@ -40,6 +41,11 @@ export class FilterComponent implements OnInit {
 
   getPositions(): void {
     this.positionsService.getPositions().then(positions => this.positions = positions);
+  }
+
+  sendFilter(): void{
+      this.userService.setFilterValue(this.model);
+      console.log(this.model);
   }
 
 }

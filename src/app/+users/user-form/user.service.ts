@@ -4,6 +4,7 @@ import { DivisionsService } from '../divisions/divisions.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
+import {Filter} from '../filter/filter';
 
 @Injectable()
 export class UserService {
@@ -12,6 +13,7 @@ export class UserService {
   private users;
   private usersByDivisions;
   private subjectUsersByDivision = new Subject<any>();
+  private filterValue: Filter;
 
   constructor(private divisionsService: DivisionsService) {}
 
@@ -27,10 +29,35 @@ export class UserService {
      this.divisions = await this.divisionsService.getDivisions();
      this.users = await this.getUsers();
 
-    this.getDivisionForUsers();
+     this.filterUsers();
+     this.getDivisionForUsers();
 
-    this.subjectUsersByDivision.next(this.usersByDivisions);
+     this.subjectUsersByDivision.next(this.usersByDivisions);
     //return this.usersByDivisions;
+  }
+
+  private filterUsers() {
+    this.users = this.users.filter((user) => {
+      let filterPassed = true;
+      for (let value in this.filterValue) {
+        let filterVal = this.filterValue[value];
+        let userVal = user[value];
+
+        if (typeof filterVal == "string") {
+          let userValLower = userVal.trim().toLowerCase();
+          let filterValLower = filterVal.trim().toLowerCase();
+
+          if (!(userValLower.indexOf(filterValLower) > -1)) {
+            filterPassed = false;
+            break;
+          }
+        }else if (typeof filterVal == "number" || typeof filterVal == "boolean") {
+          filterPassed = (filterVal !== userVal) ? false : true;
+          break;
+        }
+        return filterPassed;
+      }
+    });
   }
 
   private getDivisionForUsers() {
@@ -63,6 +90,11 @@ export class UserService {
         }
       }
     });
+    this.getUsersByDivisions();
+  }
+
+  setFilterValue(value){
+    this.filterValue = value;
     this.getUsersByDivisions();
   }
 

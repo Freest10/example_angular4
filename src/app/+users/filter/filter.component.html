@@ -1,5 +1,6 @@
-<form (ngSubmit)="onSubmit()" #filter="ngForm">
-    <div>
+<form (ngSubmit)="sendFilter()" #filter="ngForm">
+  <ul>
+    <li>
       <mat-form-field >
         <input matInput
                [(ngModel)]="model.name"
@@ -8,21 +9,8 @@
                placeholder="Фамилия"
         >
       </mat-form-field>
-    </div>
-    <div>3434
-      <mat-select
-        placeholder="Должность"
-        required
-        [(ngModel)]="model.position"
-        name="position"
-        #name="ngModel"
-      >
-        <mat-option *ngFor="let position of positions" [value]="position.value">
-          {{position.text}}
-        </mat-option>
-      </mat-select>
-    </div>
-    <div>
+    </li>
+    <li>
       <mat-form-field>
         <mat-select
           placeholder="Подразделение"
@@ -36,5 +24,21 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-    </div>
+    </li>
+    <li>
+      <mat-form-field>
+        <mat-select
+          placeholder="Должность"
+          required
+          [(ngModel)]="model.position"
+          name="position"
+          #name="ngModel"
+        >
+          <mat-option *ngFor="let position of positions" [value]="position.value">
+            {{position.text}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </li>
+  </ul>
  </form>
