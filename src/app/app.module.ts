@@ -8,10 +8,14 @@ import { RouterModule, PreloadAllModules } from '@angular/router';
 import { ROUTES }                           from './app.routes';
 import { NoContentComponent }               from './no-content';
 
+import { DivisionsService } from './+users/divisions/divisions.service';
+import { PositionsService } from './+users/positions/positions.service';
+import { UserService }      from './+users/user-form/user.service';
+
 @NgModule({
   declarations: [
-    AppComponent
-    , NoContentComponent
+    AppComponent,
+    NoContentComponent
   ],
   imports: [
     BrowserModule,
@@ -21,7 +25,7 @@ import { NoContentComponent }               from './no-content';
     MatInputModule
     , RouterModule.forRoot(ROUTES, { useHash: false, preloadingStrategy: PreloadAllModules })
   ],
-  providers: [],
+  providers: [DivisionsService, UserService, PositionsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

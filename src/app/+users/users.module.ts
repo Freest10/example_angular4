@@ -5,8 +5,10 @@ import { RouterModule } from '@angular/router';
 
 import { routes } from './users.routes';
 import { UsersComponent } from './users.component';
+import {MatButtonModule, MatCheckboxModule, MatInputModule, MatSelectModule, MatRadioModule, MatDialogModule} from '@angular/material';
+import { UserFormComponent } from './user-form/user-form.component';
 
-console.log('`Detail` bundle loaded asynchronously');
+
 
 @NgModule({
   declarations: [
@@ -14,12 +16,19 @@ console.log('`Detail` bundle loaded asynchronously');
      * Components / Directives/ Pipes
      */
     UsersComponent,
+    UserFormComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatInputModule,
+    MatSelectModule,
+    MatRadioModule,
+    MatDialogModule,
     RouterModule.forChild(routes),
-  ],
+  ]
 })
 export class UsersModule {
   public static routes = routes;

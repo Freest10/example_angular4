@@ -6,11 +6,11 @@ import { User } from './user';
 
 
 @Component({
-  selector: 'add-user',
-  templateUrl: './add-user.component.html',
+  selector: 'user-form',
+  templateUrl: './user-form.component.html',
   styles: ['.button-row { margin-top:20px;}']
 })
-export class AddUserComponent implements OnInit {
+export class UserFormComponent implements OnInit {
   submitted: boolean;
   selectedValue: string;
 
