@@ -15,7 +15,7 @@ import {Simple} from './simple';
 @Component({
   selector: 'users',
   templateUrl: './user.component.html',
-  styles: ['h4{display:inline;margin-right:20px;} .addUserToDivision{position: relative;top: 6px;cursor: pointer;}']
+  styles: ['h4{display:inline;margin-right:20px;} .addUser{position: relative;top: 6px;cursor: pointer;}']
 })
 export class UsersComponent implements OnInit, OnDestroy {
 

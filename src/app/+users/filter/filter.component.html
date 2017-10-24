@@ -1,39 +1,45 @@
-<h5>Фильтр</h5>
-<form [formGroup]="form">
-  <ul>
-    <li>
-      <mat-form-field >
-        <input matInput
-               formControlName="secondName"
-               placeholder="Фамилия"
-        >
-      </mat-form-field>
-    </li>
-    <li>
-      <mat-form-field>
-        <mat-select
-          formControlName="division"
-          placeholder="Подразделение"
-        >
-          <mat-option [value]="null"></mat-option>
-          <mat-option *ngFor="let division of divisions" [value]="division.value">
-            {{division.text}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </li>
-    <li>
-      <mat-form-field>
-        <mat-select
-          formControlName="position"
-          placeholder="Должность"
-        >
-          <mat-option [value]="null"></mat-option>
-          <mat-option *ngFor="let position of positions" [value]="position.value">
-            {{position.text}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </li>
-  </ul>
- </form>
+<mat-card class="filtr-form">
+  <mat-card-header>
+    <mat-card-title>Фильтр</mat-card-title>
+  </mat-card-header>
+  <form [formGroup]="form">
+    <ul>
+      <li>
+        <mat-form-field >
+          <input matInput
+                 formControlName="secondName"
+                 placeholder="Фамилия"
+          >
+        </mat-form-field>
+      </li>
+      <li>
+        <mat-form-field>
+          <mat-select
+            formControlName="division"
+            placeholder="Подразделение"
+          >
+            <mat-option [value]="null"></mat-option>
+            <mat-option *ngFor="let division of divisions" [value]="division.value">
+              {{division.text}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </li>
+      <li>
+        <mat-form-field>
+          <mat-select
+            formControlName="position"
+            placeholder="Должность"
+          >
+            <mat-option [value]="null"></mat-option>
+            <mat-option *ngFor="let position of positions" [value]="position.value">
+              {{position.text}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </li>
+    </ul>
+  </form>
+  <div class="clear"></div>
+</mat-card>
+

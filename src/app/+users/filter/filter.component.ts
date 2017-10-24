@@ -15,7 +15,7 @@ import { FormBuilder } from '@angular/forms';
 @Component({
   selector: 'filter',
   templateUrl: './filter.component.html',
-  styles: ['form::after{clear:both}, ul li{float:left}'],
+  styles: ['ul li{float:left;margin-left:20px;} .filtr-form{width:700px;}'],
   providers: [FormBuilder]
 })
 export class FilterComponent implements OnInit, OnDestroy {

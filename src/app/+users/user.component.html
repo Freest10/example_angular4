@@ -1,17 +1,13 @@
 <h1>Task2</h1>
-<span>
-      <span (click)="showUserInfo()">
-       Добавить пользователя
-      </span>
-    </span>
 <div class="filter">
   <filter></filter>
 </div>
 <div class="departaments">
+  <h3>Пользователи <span class="addUser" (click)="showUserInfo()"><mat-icon>add</mat-icon></span></h3>
   <table>
     <ng-container *ngFor="let division of divisions">
       <tr>
-        <h4>{{division.text}}</h4><span class="addUserToDivision" (click)="addUserToDivision(division.value)"><mat-icon>add</mat-icon></span>
+        <h4>{{division.text}}</h4><span class="addUser" (click)="addUserToDivision(division.value)"><mat-icon>add</mat-icon></span>
       </tr>
       <ng-container *ngIf="usersByDivisions">
         <ng-container *ngIf="usersByDivisions[division.value]">
@@ -27,7 +23,7 @@
                   {{userByDivision.photo}}
                 </td>
                 <td>
-                  <div (click)="showUserInfo(userByDivision)">посмотреть</div>
+                  <div (click)="showUserInfo(userByDivision)">изменить</div>
                 </td>
                 <td>
                   <div (click)="deleteUser(userByDivision.id)">удалить</div>

@@ -28,21 +28,23 @@ export class UserService {
   async getUsersByDivisions() {
      this.divisions = await this.divisionsService.getDivisions();
      this.users = await this.getUsers();
-     console.log(this.users, "this.users");
-     //this.filterDivisions();
+
+     //фильтруем пользователей
      this.filterUsers();
+
+     //распределяем пользователей по подразделениям
      this.getDivisionForUsers();
 
+     //данные для подписчиков, список пользователей и подразделений, которые прошли фильтрацию
      let usersData = {
        users: this.usersByDivisions,
-       divisions: this.getfilterDivisions()
+       divisions: this.getfilteredDivisions()
      }
 
      this.subjectUsersByDivision.next(usersData);
-    //return this.usersByDivisions;
   }
 
-  private getfilterDivisions() {
+  private getfilteredDivisions() {
     let filterdDivisions = this.divisions;
     if (this.divisions) {
         filterdDivisions = this.divisions.filter((division) => {

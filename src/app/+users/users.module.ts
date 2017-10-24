@@ -10,7 +10,8 @@ import {  MatButtonModule,
           MatSelectModule,
           MatRadioModule,
           MatDialogModule,
-          MatIconModule
+          MatIconModule,
+          MatCardModule
         } from '@angular/material';
 import { UserFormComponent } from './user-form/user-form.component';
 import { FilterComponent } from './filter/filter.component';
@@ -37,6 +38,7 @@ import { FirstLetterPipe } from './first-letter.pipe';
     MatRadioModule,
     MatDialogModule,
     MatIconModule,
+    MatCardModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forChild(routes),
