@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-
 import { routes } from './users.routes';
 import { UsersComponent } from './users.component';
 import {  MatButtonModule,
@@ -17,16 +16,16 @@ import { UserFormComponent } from './user-form/user-form.component';
 import { FilterComponent } from './filter/filter.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FirstLetterPipe } from './first-letter.pipe';
+import { ImageFromFilePipe } from './image-from-file.pipe';
+
 
 @NgModule({
   declarations: [
-    /**
-     * Components / Directives/ Pipes
-     */
     UsersComponent,
     UserFormComponent,
     FilterComponent,
-    FirstLetterPipe
+    FirstLetterPipe,
+    ImageFromFilePipe
   ],
   imports: [
     CommonModule,

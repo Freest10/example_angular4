@@ -28,5 +28,19 @@ export const USERS: User[] = [
     isCloseDEposite: false,
     isApprovalCredit: false,
     isApprovalOpenScore: false
-  }
+  },
+  {
+    id: 3,
+    name: "Зинаида",
+    secondName: "Васильева",
+    thirdName: "Павлова",
+    gender: "female",
+    photo: null,
+    position: 4,
+    division: 2,
+    isCreateDEposite: true,
+    isCloseDEposite: false,
+    isApprovalCredit: true,
+    isApprovalOpenScore: false
+  },
 ];

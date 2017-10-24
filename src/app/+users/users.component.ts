@@ -15,7 +15,7 @@ import {Simple} from './simple';
 @Component({
   selector: 'users',
   templateUrl: './user.component.html',
-  styles: ['h4{display:inline;margin-right:20px;} .addUser{position: relative;top: 6px;cursor: pointer;}']
+  styles: ['h4{display:inline;margin-right:20px;} .addUser{position: relative;top: 6px;cursor: pointer;} .image-user{max-width:100px;max-height:200px;} .position{padding:0 20px;}']
 })
 export class UsersComponent implements OnInit, OnDestroy {
 
@@ -32,7 +32,6 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   public ngOnInit() {
     this.getDivisions();
-    //this.getUsersByDivisions();
     this.getPostionsObject();
 
     this.subscriptionUsers = this.userService.getUsersObserve().subscribe( (usersData) => {
@@ -54,10 +53,6 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   deleteUser(id: number) {
     this.userService.deleteUser(id);
-  }
-
-  getUsersByDivisions(): void {
-   // this.userService.getUsersByDivisions().then(usersByDivisions => this.usersByDivisions = usersByDivisions);
   }
 
   getPostionsObject(): void{
@@ -85,7 +80,6 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(){
-    console.log("ngOnDestroy")
     this.subscriptionUsers.unsubscribe();
   }
 

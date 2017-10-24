@@ -37,19 +37,22 @@
 </div>
 <div>
   <h4>Пол:</h4>
-  <mat-radio-group>
-    <input type="radio" value="male" name="gender" [(ngModel)]="model.gender" required> Mужской
-    <input type="radio" value="female" name="gender" [(ngModel)]="model.gender" required> Женский
+  <mat-radio-group
+    name="gender"
+    #name="ngModel"
+    [(ngModel)]="model.gender"
+    placeholder="Пол"
+  >
+    <mat-radio-button type="radio" value="male" >Mужской</mat-radio-button>
+    <mat-radio-button type="radio" value="female" >Женский</mat-radio-button>
   </mat-radio-group>
 </div>
   <div>
-      <button type="button" md-button (click)="imgFileInput.click()">Фото</button>
-      <input hidden type="file" #imgFileInput [(ngModel)]="model.photo"
-             name="photo"
-             #name="ngModel"
-             type="file"
-             (change)="previewImage($event)"
-      />
+      <button type="button" mat-raised-button (click)="imgFileInput.click()">Фото</button>
+      <mat-form-field >
+        <input matInput [value]="(model.photo) ? model.photo.name : model.photo"   />
+      </mat-form-field>
+      <input hidden type="file" #imgFileInput (change)="loadImage($event)"/>
   </div>
 <div>
   <mat-form-field>

@@ -61,8 +61,15 @@ export class UserFormComponent implements OnInit {
       );
   }
 
-  previewImage(event) {
-    console.log(event, "event");
+  loadImage(event) {
+    let files = event.srcElement.files;
+    let fileName = files[0].name;
+    if(fileName.indexOf(".jpg") || fileName.indexOf(".png") || fileName.indexOf(".gif")){
+      this.model.photo = files[0];
+    }else{
+      this.model.photo = null;
+    }
+   // console.log(event, "event");
   }
 
   getDivisions(): void {

@@ -1,4 +1,4 @@
-<h1>Task2</h1>
+<h1>Административная панель</h1>
 <div class="filter">
   <filter></filter>
 </div>
@@ -17,16 +17,16 @@
                   {{userByDivision.secondName}} {{userByDivision.name | firstLetter}} {{userByDivision.thirdName | firstLetter}}
                 </td>
                 <td>
-                  {{positions[userByDivision.position]}}
+                  <div class="position">{{positions[userByDivision.position]}}</div>
                 </td>
                 <td>
-                  {{userByDivision.photo}}
+                  <img class="image-user" src="{{userByDivision.photo | imageFromFile | async}}" />
                 </td>
                 <td>
-                  <div (click)="showUserInfo(userByDivision)">изменить</div>
+                  <div class="cursor_pointer" (click)="showUserInfo(userByDivision)"><mat-icon>mode edit</mat-icon></div>
                 </td>
                 <td>
-                  <div (click)="deleteUser(userByDivision.id)">удалить</div>
+                  <div class="cursor_pointer" (click)="deleteUser(userByDivision.id)"><mat-icon>delete</mat-icon></div>
                 </td>
                </tr>
             </ng-container>
