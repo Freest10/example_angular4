@@ -16,7 +16,7 @@ export const USERS: User[] = [
     isApprovalOpenScore: false
   },
   {
-    id: 1,
+    id: 2,
     name: "Вася",
     secondName: "Иванов",
     thirdName: "Иванович",

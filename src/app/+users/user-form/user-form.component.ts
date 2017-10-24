@@ -80,7 +80,8 @@ export class UserFormComponent implements OnInit {
   onSubmit() {
       //merge prev data and chenged data
       if(this.data.user){
-          let userData = Object.assign(this.data.user, this.model);
+          this.userService.setUserDataById(this.data.user.id, this.model);
+          //let userData = Object.assign(this.data.user, this.model);
       }else{
         //add new User
         this.addUser();

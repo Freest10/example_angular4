@@ -21,6 +21,11 @@ export class UserService {
     return Promise.resolve(USERS);
   }
 
+  getUser(id: number): Promise<User> {
+    return this.getUsers()
+      .then(users => users.find(user => user.id === id));
+  }
+
   getUsersObserve(): Observable<any> {
     return this.subjectUsersByDivision;
   }
@@ -105,7 +110,6 @@ export class UserService {
 
   private setUsersForDivions() {
     this.users.forEach((user) => {
-      console.log(this.usersByDivisions, "user");
       this.usersByDivisions[user.division].push(user);
     });
   }
@@ -132,16 +136,13 @@ export class UserService {
     this.getUsersByDivisions();
   }
 
-  /*
-  getHeroesSlowly(): Promise<Hero[]> {
-    return new Promise(resolve => {
-      // Simulate server latency with 2 second delay
-      setTimeout(() => resolve(this.getHeroes()), 2000);
+  async setUserDataById(id: number, data: User){
+    let users = await this.getUsers();
+    users.forEach((user)=>{
+      if(user.id === id){
+        Object.assign(user, data);
+      }
     });
+    this.getUsersByDivisions();
   }
-
-  getHero(id: number): Promise<Hero> {
-    return this.getHeroes()
-      .then(heroes => heroes.find(hero => hero.id === id));
-  }*/
 }
