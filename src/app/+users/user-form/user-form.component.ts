@@ -3,11 +3,11 @@ import {
   OnInit,
   Inject
 } from '@angular/core';
-import { User } from './user';
+import { User } from '../user/user';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import {DivisionsService} from '../divisions/divisions.service';
 import {PositionsService} from '../positions/positions.service';
-import {UserService} from './user.service';
+import {UserService} from '../user/user.service';
 import {Simple} from '../simple';
 
 @Component({
@@ -18,20 +18,7 @@ import {Simple} from '../simple';
 export class UserFormComponent implements OnInit {
   submitted: boolean;
   selectedValue: string;
-  model: User = new User(
-    10,
-    "",
-    "",
-    "",
-    "",
-    null,
-    1,
-    1,
-    false,
-    false,
-    false,
-    false
-  );
+  model: User;
   private positions: Array<Simple>;
   private divisions: Array<Simple>;
 
@@ -44,14 +31,34 @@ export class UserFormComponent implements OnInit {
   ){}
 
   public ngOnInit() {
+      this.createUserModel();
       this.getDivisions();
       this.getPositions();
       //copy real user data
       if(this.data.user){
         this.model = Object.assign({},this.data.user);
       }
+  }
 
-    console.log(this.data, 'hello `AddUserComponent` component');
+  private createUserModel(){
+      let minId = 100;
+      let maxId = 1000;
+      let division = (this.data.division) ? this.data.division : null;
+      //New user must have random id from minId to maxId
+      this.model = new User(
+        Math.floor(Math.random() * (maxId - minId + 1)) + minId,
+        "",
+        "",
+        "",
+        "male",
+        null,
+        null,
+        division,
+        false,
+        false,
+        false,
+        false
+      );
   }
 
   previewImage(event) {

@@ -1,14 +1,21 @@
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { routes } from './users.routes';
 import { UsersComponent } from './users.component';
-import {MatButtonModule, MatCheckboxModule, MatInputModule, MatSelectModule, MatRadioModule, MatDialogModule} from '@angular/material';
+import {  MatButtonModule,
+          MatCheckboxModule,
+          MatInputModule,
+          MatSelectModule,
+          MatRadioModule,
+          MatDialogModule,
+          MatIconModule
+        } from '@angular/material';
 import { UserFormComponent } from './user-form/user-form.component';
 import { FilterComponent } from './filter/filter.component';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FirstLetterPipe } from './first-letter.pipe';
 
 @NgModule({
   declarations: [
@@ -17,7 +24,8 @@ import { FilterComponent } from './filter/filter.component';
      */
     UsersComponent,
     UserFormComponent,
-    FilterComponent
+    FilterComponent,
+    FirstLetterPipe
   ],
   imports: [
     CommonModule,
@@ -28,6 +36,9 @@ import { FilterComponent } from './filter/filter.component';
     MatSelectModule,
     MatRadioModule,
     MatDialogModule,
+    MatIconModule,
+    FormsModule,
+    ReactiveFormsModule,
     RouterModule.forChild(routes),
   ],
   entryComponents: [UserFormComponent]

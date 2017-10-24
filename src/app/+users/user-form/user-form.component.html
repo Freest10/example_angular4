@@ -1,12 +1,13 @@
 <h1>Добавление пользователя</h1>
-<form (ngSubmit)="onSubmit()" #f="ngForm">
+<form (ngSubmit)="onSubmit()" #userForm="ngForm">
 <div>
   <mat-form-field >
     <input matInput
            [(ngModel)]="model.name"
-           name="name"
+           name="secondName"
            #name="ngModel"
            placeholder="Фамилия"
+           required
     >
   </mat-form-field>
 </div>
@@ -14,9 +15,10 @@
   <mat-form-field >
     <input matInput
            [(ngModel)]="model.secondName"
-           name="secondName"
+           name="name"
            #name="ngModel"
            placeholder="Имя"
+           required
     >
   </mat-form-field>
 </div>
@@ -27,6 +29,7 @@
            name="thirdName"
            #name="ngModel"
            placeholder="Отчество"
+           required
     >
   </mat-form-field>
 </div>
@@ -35,8 +38,6 @@
   <mat-radio-group>
     <input type="radio" value="male" name="gender" [(ngModel)]="model.gender" required> Mужской
     <input type="radio" value="female" name="gender" [(ngModel)]="model.gender" required> Женский
-    <!--<mat-radio-button value="male" name="gender" [(ngModel)]="model" >Mужской</mat-radio-button>-->
-    <!--<mat-radio-button value="female" name="gender" [(ngModel)]="model" >Женский</mat-radio-button>-->
   </mat-radio-group>
 </div>
   <div>
@@ -68,6 +69,7 @@
     <mat-select
                 placeholder="Подразделение"
                 required
+                [disabled]="(data.division) ? true : false"
                 [(ngModel)]="model.division"
                 name="division"
                 #name="ngModel"
@@ -105,7 +107,7 @@
   >Одобрение открытие счета</mat-checkbox>
 </div>
 <div class="button-row">
-  <button mat-raised-button color="primary" type="submit">Сохранить</button>
+  <button mat-raised-button color="primary" type="submit" [disabled]="!userForm.form.valid">Сохранить</button>
   <button mat-raised-button (click)="closeModal()">Отменить</button>
 </div>
 </form>

@@ -1,7 +1,7 @@
 export class Filter {
 
   constructor(
-    public name: string,
+    public secondName: string,
     public division: number,
     public position: number
   ) {}

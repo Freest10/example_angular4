@@ -1,11 +1,8 @@
 <h1>Task2</h1>
 <span>
-      <a [routerLink]="['/task1/users']" >
-       Все Пользователи
-      </a>
-      <div (click)="showUserInfo()">
+      <span (click)="showUserInfo()">
        Добавить пользователя
-      </div>
+      </span>
     </span>
 <div class="filter">
   <filter></filter>
@@ -14,14 +11,14 @@
   <table>
     <ng-container *ngFor="let division of divisions">
       <tr>
-        <h4>{{division.text}}</h4>
+        <h4>{{division.text}}</h4><span class="addUserToDivision" (click)="addUserToDivision(division.value)"><mat-icon>add</mat-icon></span>
       </tr>
       <ng-container *ngIf="usersByDivisions">
         <ng-container *ngIf="usersByDivisions[division.value]">
             <ng-container *ngFor="let userByDivision of usersByDivisions[division.value]">
               <tr>
                 <td>
-                  {{userByDivision.secondName}}
+                  {{userByDivision.secondName}} {{userByDivision.name | firstLetter}} {{userByDivision.thirdName | firstLetter}}
                 </td>
                 <td>
                   {{positions[userByDivision.position]}}

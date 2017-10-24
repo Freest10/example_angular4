@@ -1,11 +1,10 @@
-<form (ngSubmit)="sendFilter()" #filter="ngForm">
+<h5>Фильтр</h5>
+<form [formGroup]="form">
   <ul>
     <li>
       <mat-form-field >
         <input matInput
-               [(ngModel)]="model.name"
-               name="name"
-               #name="ngModel"
+               formControlName="secondName"
                placeholder="Фамилия"
         >
       </mat-form-field>
@@ -13,12 +12,10 @@
     <li>
       <mat-form-field>
         <mat-select
+          formControlName="division"
           placeholder="Подразделение"
-          required
-          [(ngModel)]="model.division"
-          name="division"
-          #name="ngModel"
         >
+          <mat-option [value]="null"></mat-option>
           <mat-option *ngFor="let division of divisions" [value]="division.value">
             {{division.text}}
           </mat-option>
@@ -28,12 +25,10 @@
     <li>
       <mat-form-field>
         <mat-select
+          formControlName="position"
           placeholder="Должность"
-          required
-          [(ngModel)]="model.position"
-          name="position"
-          #name="ngModel"
         >
+          <mat-option [value]="null"></mat-option>
           <mat-option *ngFor="let position of positions" [value]="position.value">
             {{position.text}}
           </mat-option>

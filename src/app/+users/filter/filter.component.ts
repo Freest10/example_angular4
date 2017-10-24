@@ -1,38 +1,54 @@
 import {
   Component,
   OnInit,
-  Inject
+  Inject,
+  OnDestroy
 } from '@angular/core';
 
 import {DivisionsService} from '../divisions/divisions.service';
 import {PositionsService} from '../positions/positions.service';
-import {UserService} from '../user-form/user.service';
+import {UserService} from '../user/user.service';
 import {Simple} from '../simple';
 import {Filter} from './filter';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'filter',
   templateUrl: './filter.component.html',
-  styles: ['form::after{clear:both}, ul li{float:left}']
+  styles: ['form::after{clear:both}, ul li{float:left}'],
+  providers: [FormBuilder]
 })
-export class FilterComponent implements OnInit {
-  private model: Filter = new Filter(
-    "",
-    null,
-    null
-  );
+export class FilterComponent implements OnInit, OnDestroy {
+  private form;
   private positions: Array<Simple>;
   private divisions: Array<Simple>;
 
   constructor(
     private userService: UserService,
     private divisionsService: DivisionsService,
-    private positionsService: PositionsService
+    private positionsService: PositionsService,
+    private formBuilder: FormBuilder
   ){}
 
   public ngOnInit() {
+      console.log("initForm");
+      this.initForm();
       this.getDivisions();
       this.getPositions();
+  }
+
+  private initForm(){
+    let formModel = new Filter(
+      "",
+      null,
+      null
+    );
+
+    this.form = this.formBuilder.group(formModel);
+
+    this.form.valueChanges.subscribe(data => {
+      this.userService.setFilterValue(data);
+    });
   }
 
   getDivisions(): void {
@@ -43,9 +59,9 @@ export class FilterComponent implements OnInit {
     this.positionsService.getPositions().then(positions => this.positions = positions);
   }
 
-  sendFilter(): void{
-      this.userService.setFilterValue(this.model);
-      console.log(this.model);
+  ngOnDestroy(){
+    //filter clear after destroy
+    this.form.reset();
   }
 
 }

@@ -28,35 +28,66 @@ export class UserService {
   async getUsersByDivisions() {
      this.divisions = await this.divisionsService.getDivisions();
      this.users = await this.getUsers();
-
+     console.log(this.users, "this.users");
+     //this.filterDivisions();
      this.filterUsers();
      this.getDivisionForUsers();
 
-     this.subjectUsersByDivision.next(this.usersByDivisions);
+     let usersData = {
+       users: this.usersByDivisions,
+       divisions: this.getfilterDivisions()
+     }
+
+     this.subjectUsersByDivision.next(usersData);
     //return this.usersByDivisions;
+  }
+
+  private getfilterDivisions() {
+    let filterdDivisions = this.divisions;
+    if (this.divisions) {
+        filterdDivisions = this.divisions.filter((division) => {
+        if (this.filterValue) {
+          let filterVal = this.filterValue.division;
+          if(filterVal){
+            let filteredVal = division.value;
+            return filterVal === filteredVal;
+          }
+        }
+        return true;
+      });
+    }
+
+    return filterdDivisions;
   }
 
   private filterUsers() {
     this.users = this.users.filter((user) => {
       let filterPassed = true;
-      for (let value in this.filterValue) {
-        let filterVal = this.filterValue[value];
-        let userVal = user[value];
+      if(this.filterValue){
+        for (let value in this.filterValue) {
 
-        if (typeof filterVal == "string") {
-          let userValLower = userVal.trim().toLowerCase();
-          let filterValLower = filterVal.trim().toLowerCase();
+          let filterVal = this.filterValue[value];
+          let userVal = user[value];
 
-          if (!(userValLower.indexOf(filterValLower) > -1)) {
-            filterPassed = false;
-            break;
+          if(!filterVal) continue;
+
+          if (typeof filterVal == "string") {
+            let userValLower = userVal.trim().toLowerCase();
+            let filterValLower = filterVal.trim().toLowerCase();
+
+            if (!(userValLower.indexOf(filterValLower) > -1)) {
+              filterPassed = false;
+              break;
+            }
+          }else if (typeof filterVal == "number") {
+            if(filterVal !== userVal){
+              filterPassed = false;
+              break;
+            }
           }
-        }else if (typeof filterVal == "number" || typeof filterVal == "boolean") {
-          filterPassed = (filterVal !== userVal) ? false : true;
-          break;
         }
-        return filterPassed;
       }
+      return filterPassed;
     });
   }
 
@@ -72,6 +103,7 @@ export class UserService {
 
   private setUsersForDivions() {
     this.users.forEach((user) => {
+      console.log(this.usersByDivisions, "user");
       this.usersByDivisions[user.division].push(user);
     });
   }

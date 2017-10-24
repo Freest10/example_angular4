@@ -3,6 +3,20 @@ import { User } from './user';
 export const USERS: User[] = [
   {
     id: 1,
+    name: "Петр",
+    secondName: "Васильев",
+    thirdName: "Абрахамянович",
+    gender: "male",
+    photo: null,
+    position: 3,
+    division: 1,
+    isCreateDEposite: false,
+    isCloseDEposite: false,
+    isApprovalCredit: true,
+    isApprovalOpenScore: false
+  },
+  {
+    id: 1,
     name: "Вася",
     secondName: "Иванов",
     thirdName: "Иванович",
