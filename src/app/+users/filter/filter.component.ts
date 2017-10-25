@@ -30,7 +30,6 @@ export class FilterComponent implements OnInit, OnDestroy {
   ){}
 
   public ngOnInit() {
-      console.log("initForm");
       this.initForm();
       this.getDivisions();
       this.getPositions();
@@ -47,6 +46,7 @@ export class FilterComponent implements OnInit, OnDestroy {
 
     this.form.valueChanges.subscribe(data => {
       this.userService.setFilterValue(data);
+      this.divisionsService.setFilterValue(data);
     });
   }
 

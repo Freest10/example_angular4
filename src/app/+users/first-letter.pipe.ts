@@ -7,6 +7,5 @@ export class FirstLetterPipe implements PipeTransform {
       let textTransformed = text.charAt(0).toUpperCase() + '.';
       return textTransformed;
     }
-   // return allHeroes.filter(hero => hero.canFly);
   }
 }

@@ -39,7 +39,7 @@ export class UsersComponent implements OnInit, OnDestroy {
        this.divisions = usersData.divisions;
     });
 
-    this.userService.getUsersByDivisions();
+    this.userService.emitUsersByDivisions();
   }
 
   getDivisions(): void {

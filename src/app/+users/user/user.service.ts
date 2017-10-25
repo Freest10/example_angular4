@@ -30,42 +30,29 @@ export class UserService {
     return this.subjectUsersByDivision;
   }
 
-  async getUsersByDivisions() {
-     this.divisions = await this.divisionsService.getDivisions();
+  //раздает подписчикам (блоку пользователи) отфильтрованные данные
+  async emitUsersByDivisions() {
+
+     this.divisions = await this.divisionsService.getfilteredDivisions();
      this.users = await this.getUsers();
 
-     //фильтруем пользователей
-     this.filterUsers();
+     if(this.divisions && this.users){
+       //фильтруем пользователей
+       this.filterUsers();
 
-     //распределяем пользователей по подразделениям
-     this.getDivisionForUsers();
+       //распределяем пользователей по подразделениям
+       this.getDivisionForUsers();
+     }
 
      //данные для подписчиков, список пользователей и подразделений, которые прошли фильтрацию
      let usersData = {
        users: this.usersByDivisions,
-       divisions: this.getfilteredDivisions()
+       divisions: this.divisions
      }
 
      this.subjectUsersByDivision.next(usersData);
   }
 
-  private getfilteredDivisions() {
-    let filterdDivisions = this.divisions;
-    if (this.divisions) {
-        filterdDivisions = this.divisions.filter((division) => {
-        if (this.filterValue) {
-          let filterVal = this.filterValue.division;
-          if(filterVal){
-            let filteredVal = division.value;
-            return filterVal === filteredVal;
-          }
-        }
-        return true;
-      });
-    }
-
-    return filterdDivisions;
-  }
 
   private filterUsers() {
     this.users = this.users.filter((user) => {
@@ -116,7 +103,7 @@ export class UserService {
 
   async addUser(user: User){
     await this.getUsers().then(users => users.push(user));
-    this.getUsersByDivisions();
+    this.emitUsersByDivisions();
   }
 
   async deleteUser(id: number){
@@ -128,12 +115,12 @@ export class UserService {
         }
       }
     });
-    this.getUsersByDivisions();
+    this.emitUsersByDivisions();
   }
 
   setFilterValue(value){
     this.filterValue = value;
-    this.getUsersByDivisions();
+    this.emitUsersByDivisions();
   }
 
   async setUserDataById(id: number, data: User){
@@ -143,6 +130,6 @@ export class UserService {
         Object.assign(user, data);
       }
     });
-    this.getUsersByDivisions();
+    this.emitUsersByDivisions();
   }
 }
