@@ -33,7 +33,7 @@ export const USERS: User[] = [
     id: 3,
     name: "Зинаида",
     secondName: "Васильева",
-    thirdName: "Павлова",
+    thirdName: "Павловна",
     gender: "female",
     photo: null,
     position: 4,
