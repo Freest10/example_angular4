@@ -2,15 +2,16 @@ import { User } from './user';
 import { USERS } from './mock-users';
 import { DivisionsService } from '../divisions/divisions.service';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import {Filter} from '../filter/filter';
+import {Simple} from '../simple';
 
 @Injectable()
 export class UserService {
 
-  private divisions;
-  private users;
+  private divisions: Simple[];
+  private users: User[];
   private usersByDivisions;
   private subjectUsersByDivision = new Subject<any>();
   private filterValue: Filter;
@@ -30,22 +31,22 @@ export class UserService {
     return this.subjectUsersByDivision;
   }
 
-  //раздает подписчикам (блоку пользователи) отфильтрованные данные
+  // раздает подписчикам (блоку пользователи) отфильтрованные данные
   async emitUsersByDivisions() {
 
      this.divisions = await this.divisionsService.getfilteredDivisions();
      this.users = await this.getUsers();
 
-     if(this.divisions && this.users){
-       //фильтруем пользователей
+     if (this.divisions && this.users) {
+       // фильтруем пользователей
        this.filterUsers();
 
-       //распределяем пользователей по подразделениям
+       // распределяем пользователей по подразделениям
        this.getDivisionForUsers();
      }
 
-     //данные для подписчиков, список пользователей и подразделений, которые прошли фильтрацию
-     let usersData = {
+     // данные для подписчиков, список пользователей и подразделений, которые прошли фильтрацию
+     const usersData = {
        users: this.usersByDivisions,
        divisions: this.divisions
      }
@@ -53,17 +54,16 @@ export class UserService {
      this.subjectUsersByDivision.next(usersData);
   }
 
-
   private filterUsers() {
     this.users = this.users.filter((user) => {
       let filterPassed = true;
-      if(this.filterValue){
+      if (this.filterValue) {
         for (let value in this.filterValue) {
 
           let filterVal = this.filterValue[value];
           let userVal = user[value];
 
-          if(!filterVal) continue;
+          if (!filterVal) continue;
 
           if (typeof filterVal == "string") {
             let userValLower = userVal.trim().toLowerCase();
@@ -74,7 +74,7 @@ export class UserService {
               break;
             }
           }else if (typeof filterVal == "number") {
-            if(filterVal !== userVal){
+            if (filterVal !== userVal) {
               filterPassed = false;
               break;
             }
@@ -101,14 +101,14 @@ export class UserService {
     });
   }
 
-  async addUser(user: User){
+  async addUser(user: User) {
     await this.getUsers().then(users => users.push(user));
     this.emitUsersByDivisions();
   }
 
-  async deleteUser(id: number){
+  async deleteUser(id: number) {
     await this.getUsers().then(users => {
-      for(let i=0; i < users.length;  i++) {
+      for (let i=0; i < users.length;  i++) {
         let user = users[i];
         if(user.id == id){
           users.splice(i, 1);

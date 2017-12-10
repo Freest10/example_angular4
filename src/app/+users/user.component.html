@@ -13,7 +13,7 @@
         <ng-container *ngIf="usersByDivisions[division.value]">
             <ng-container *ngFor="let userByDivision of usersByDivisions[division.value]">
               <tr>
-                <td>
+                <td class="fio">
                   {{userByDivision.secondName}} {{userByDivision.name | firstLetter}} {{userByDivision.thirdName | firstLetter}}
                 </td>
                 <td>

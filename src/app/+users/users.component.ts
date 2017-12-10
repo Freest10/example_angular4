@@ -13,7 +13,7 @@ import {MatDialog} from '@angular/material';
 import {Simple} from './simple';
 
 @Component({
-  selector: 'users',
+  selector: "users",
   templateUrl: './user.component.html',
   styles: ['h4{display:inline;margin-right:20px;} .addUser{position: relative;top: 6px;cursor: pointer;} .image-user{max-width:100px;max-height:200px;} .position{padding:0 20px;}']
 })
@@ -55,22 +55,22 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.userService.deleteUser(id);
   }
 
-  getPostionsObject(): void{
+  getPostionsObject(): void {
     this.positionsService.getPostionsObject().then(positions => this.positions = positions);
   }
 
   private showUserInfo(user?: User) {
-    let data= {
+    const data = {
       user: user
     };
-    let dialogRef = this.dialog.open(UserFormComponent, {
+    const dialogRef = this.dialog.open(UserFormComponent, {
       width: '600px',
       data: data
     });
   }
 
-  addUserToDivision(id){
-    let data= {
+  addUserToDivision(id) {
+    const data = {
       division: id
     };
     this.dialog.open(UserFormComponent, {
@@ -79,7 +79,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.subscriptionUsers.unsubscribe();
   }
 

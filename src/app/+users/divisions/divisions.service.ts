@@ -13,10 +13,10 @@ export class DivisionsService {
 
   async getfilteredDivisions() {
     let filterdDivisions =  await this.getDivisions();
-    let divisionIdAtFilter = await this.getDivisionId();
+    const divisionIdAtFilter = await this.getDivisionId();
     if (filterdDivisions && divisionIdAtFilter) {
         filterdDivisions = filterdDivisions.filter((division) => {
-              let filteredVal = division.value;
+              const filteredVal = division.value;
               return divisionIdAtFilter === filteredVal;
         });
     }
@@ -25,8 +25,8 @@ export class DivisionsService {
 
   private getDivisionId() {
     return new Promise((resolve, reject) => {
-      if(this.filterValue) {
-        if(this.filterValue.division) {
+      if (this.filterValue) {
+        if (this.filterValue.division) {
           resolve(this.filterValue.division);
         }
       }
