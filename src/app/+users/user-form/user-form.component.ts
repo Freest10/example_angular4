@@ -19,8 +19,8 @@ export class UserFormComponent implements OnInit {
   submitted: boolean;
   selectedValue: string;
   model: User;
-  private positions: Array<Simple>;
-  private divisions: Array<Simple>;
+  public positions: Array<Simple>;
+  public divisions: Array<Simple>;
 
   constructor(
     public dialogRef: MatDialogRef<UserFormComponent>,

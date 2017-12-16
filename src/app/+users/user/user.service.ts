@@ -6,13 +6,14 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import {Filter} from '../filter/filter';
 import {Simple} from '../simple';
+import {UserByDivisions} from './users-by-division.interface';
 
 @Injectable()
 export class UserService {
 
   private divisions: Simple[];
   private users: User[];
-  private usersByDivisions;
+  private usersByDivisions: UserByDivisions;
   private subjectUsersByDivision = new Subject<any>();
   private filterValue: Filter;
 
@@ -58,22 +59,24 @@ export class UserService {
     this.users = this.users.filter((user) => {
       let filterPassed = true;
       if (this.filterValue) {
-        for (let value in this.filterValue) {
+        for (const value in this.filterValue) {
 
-          let filterVal = this.filterValue[value];
-          let userVal = user[value];
+          const filterVal = this.filterValue[value];
+          const userVal = user[value];
 
-          if (!filterVal) continue;
+          if (!filterVal) {
+            continue;
+          }
 
-          if (typeof filterVal == "string") {
-            let userValLower = userVal.trim().toLowerCase();
-            let filterValLower = filterVal.trim().toLowerCase();
+          if (typeof filterVal === 'string') {
+            const userValLower = userVal.trim().toLowerCase();
+            const filterValLower = filterVal.trim().toLowerCase();
 
             if (!(userValLower.indexOf(filterValLower) > -1)) {
               filterPassed = false;
               break;
             }
-          }else if (typeof filterVal == "number") {
+          }else if (typeof filterVal === 'number') {
             if (filterVal !== userVal) {
               filterPassed = false;
               break;
@@ -108,9 +111,9 @@ export class UserService {
 
   async deleteUser(id: number) {
     await this.getUsers().then(users => {
-      for (let i=0; i < users.length;  i++) {
-        let user = users[i];
-        if(user.id == id){
+      for (let i = 0; i < users.length;  i++) {
+        const user = users[i];
+        if (user.id === id) {
           users.splice(i, 1);
         }
       }
@@ -123,10 +126,10 @@ export class UserService {
     this.emitUsersByDivisions();
   }
 
-  async setUserDataById(id: number, data: User){
-    let users = await this.getUsers();
-    users.forEach((user)=>{
-      if(user.id === id){
+  async setUserDataById(id: number, data: User) {
+    const users = await this.getUsers();
+    users.forEach((user) => {
+      if (user.id === id) {
         Object.assign(user, data);
       }
     });
